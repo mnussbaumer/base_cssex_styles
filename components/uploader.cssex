@@ -1,0 +1,60 @@
+.uploader {
+    position: relative;
+}
+
+.uploader-icon {
+    position: relative;
+    cursor: pointer;
+    @apply hoverable-primary;
+    svg {
+	position: absolute;
+	content: "";
+	left: calc(100% - 40px);
+	top: 15px;
+	background-color: <$primary$>;
+	fill: white;
+	@fn::enforce_circle(30px)
+    }
+}
+
+.uploader-popup {
+    position: fixed;
+    z-index: 101;
+    width: 100vw;
+    max-width: 600px;
+    height: 100vh;
+    max-height: 400px;
+    left: calc(50vw - 300px);
+    top: calc(50vh - 200px);
+    background-color: <$white$>;
+    border-radius: 8pt;
+    border: 2px dashed <$primary$>;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    input {
+	top: -5000px;
+	left: -5000px;
+	position: fixed;
+    }
+
+    &.popup-closed {
+	display: none;
+    }
+
+    canvas {
+	width: 300px;
+	height: 300px;
+	border: 2px solid <$secondary$>;
+    }
+
+    label {
+	position: absolute;
+	top: 5px;
+	left: calc(50% - 150px);
+    }
+
+    &.element-dragging {
+	border-color: <$success$>;
+    }
+}

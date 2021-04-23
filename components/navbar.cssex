@@ -1,0 +1,245 @@
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: <$nav-height$>;
+    background-color: <$nav-background$>;
+    color: <$nav-color$>;
+    box-shadow: 0 1px 3px 1px <$box-shadow-color$>;
+    @apply primary-gradient;
+
+    display: flex;
+    flex-flow: row nowrap;
+
+    section {
+	height: <$nav-height$>;
+	&.side-a {
+	    order: 0;
+	}
+
+	&.side-b {
+	    order: 2;
+	    .sm-content {
+		display: none;
+	    }
+	}
+
+	&.side-a, &.side-b {
+	    min-width: 30%;
+	}
+	
+	.nav-logo {
+	    height: <$nav-height$>;
+	    max-height: <$nav-height$>;
+	    width: auto;
+	    display: flex;
+	    justify-content: flex-start;
+	    align-items: center;
+	    flex-flow: row nowrap;
+	    a {
+		height: 100%;
+		max-height: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: bold;
+		@apply hoverable-primary;
+
+		img {
+		    height: 80%;
+		}
+	    }
+	}
+
+	> ul {
+	    display: flex;
+	    flex-flow: row nowrap;
+	    height: inherit;
+	    justify-content: flex-end;
+	    align-items: center;
+	    > li {
+		color: <$nav-color$>;
+		button:not(.no-fx), &> a:not(.no-fx) {
+		    padding-left: 10px;
+		    padding-right: 10px;
+		    &:hover {
+			background-color: @fn::darken(<$primary$>, 10);
+		    }
+		}
+	    }
+	}
+    }
+
+    .center-flexer {
+	flex: 1;
+	order: 1;
+    }
+
+    .dropdown-section {
+	position: relative;
+	height: inherit;
+	button:not(.no-fx), a:not(.no-fx) {
+	    height: 100%;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    justify-content: center;
+	    align-items: center;
+	    color: <$nav-color$>;
+	    
+	}
+
+	&:hover {
+	    button:not(.no-fx) {
+		background-color: @fn::darken(<$primary$>, 10);
+	    }
+	}
+		
+
+	&.css-dropdown:hover .dropdown-closed {
+	    display: block;
+	}
+
+	
+	.dropdown {
+	    box-shadow: 0 0 10px 0px <$box-shadow-color$>;
+	    position: absolute;
+	    top: 100%;
+	    width: 100%;
+	    @apply primary-gradient;
+	    color: <$nav-color$>;
+	    min-width: 200px;
+	    
+	    &.dropdown-closed {
+		display: none;
+	    }
+
+	    &.dropdown-open {
+		display: block;
+	    }
+
+	    &.dropdown-alignment-left {
+		left: 0px;
+		right: auto;
+	    }
+
+	    &.dropdown-alignment-right {
+		left: auto;
+		right: 0px;
+	    }
+
+	    li {
+		a {
+		    width: 100%;
+		    display: block;
+		    padding: 10px;
+		    &:hover {
+			background-color: @fn::darken(<$primary$>, 10);
+		    }
+		}
+	    }
+	}
+    }
+}
+
+@media screen and (max-width: <$md$>) {
+    nav {
+
+	.center-flexer {
+	    display: none;
+	}
+	section.side-b {
+	    width: 100%;
+	    
+	    .sm-content {
+		display: block;
+		border-radius: 8pt;
+		border: 1px solid white;
+		margin: 5px 5px 5px auto;
+		color: white;
+		@apply hoverable-primary;
+	    }
+	    
+	    ul {
+		display: none;
+	    }
+	    
+	    &.sm-css-dropdown:hover {
+		position: absolute;
+		width: 100%;
+	    }
+
+
+	    &.sm-css-dropdown:hover > ul, > ul.dropdown-open {
+		left: 0;
+		position: absolute;
+		display: flex;
+		flex-flow: row wrap;
+		top: 100%;
+		background-color: <$primary$>;
+		width: 100%;
+		box-shadow: 0 2.5px 2px 0 <$box-shadow-color$>;
+	    }
+	}
+    }
+}
+
+
+.side-navbar-view {
+    display: flex;
+    width: 100%;
+    height: inherit;
+    min-height: inherit;
+    background-color: <$background$>;
+    color: <$text$>;
+    
+    .side-navbar {
+	flex: 1;
+	border-right: 1px solid <$shadow$>;
+	li {
+	    border-bottom: 1px solid <$shadow$>;
+	    display: flex;
+	    box-shadow: 0 0 2px 1px <$shadow$>;
+	    a {
+		padding: 10px;
+		flex: 1;
+		color: <$soft$>;
+		&.active-path {
+		    color: <$primary$>;
+		}
+		
+	    }
+	    a:hover {
+		color: <$primary$>;
+	    }
+	    
+	    &:last-child {
+		//border-bottom: 0 solid <$primary$>;
+	    }
+	}
+	.profile-image {
+	    padding-top: 25px;
+	    padding-bottom: 25px;
+	}
+	
+	@fn::enforce_size(width, 300px)
+    }
+
+    @media screen and (max-width: <$md$>) {
+	flex-flow: column nowrap;
+	
+	.side-navbar {
+	    @fn::enforce_size(width, 100%)
+	}
+    }
+
+    @media (prefers-color-scheme: dark) {
+	background-color: <$background-dm$>;
+	color: <$text-dm$>;
+    }
+}
+
+

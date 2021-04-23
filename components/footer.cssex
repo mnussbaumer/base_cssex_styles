@@ -1,0 +1,14 @@
+footer {
+    width: 100%;
+    min-height: <$footer-height$>;
+    height: <$footer-height$>;
+    background-color: <$footer-background$>;
+    color: <$footer-color$>;
+    @apply primary-gradient;
+
+    @media (prefers-color-scheme: dark) {
+	background-color: <$footer-background-dm$>;
+	color: <$footer-color-dm$>;
+    }
+}
+    

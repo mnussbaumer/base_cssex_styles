@@ -1,0 +1,21 @@
+main {
+    margin-top: <$nav-height$>;
+    min-height: calc(100vh - <$nav-height$>);
+    position: relative;
+
+    .alert-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+
+	p {
+	    cursor: pointer;
+	}
+    }
+
+    @media screen and (max-width: <$md$>) {
+	min-height: unset;
+    }
+}
+

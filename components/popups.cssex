@@ -1,0 +1,38 @@
+.popup-closed {
+    display: none;
+}
+
+.popup {
+    background-color: <$background$>;
+    color: <$text$>;
+    
+    button.btn-close {
+	position: absolute;
+	left: calc(100% - 20px);
+	top: -10px;
+	background-color: <$primary$>;
+	color: <$text$>;
+	@apply hoverable-primary;
+	box-shadow: -2px 2px 2px 1px <$shadow$>;
+	@fn::enforce_circle(30px)
+			   
+			   svg {
+	    position: absolute;
+	    top: 2.5px;
+	    left: 2.5px;
+	    fill: white;
+	    @apply hoverable-primary;
+	    @fn::enforce_circle(25px)
+			       
+	}
+    }
+
+    box-shadow: 7px 7px 7px 6px rgba(0,0,0,.2);
+
+    @media (prefers-color-scheme: dark) {
+	background-color: <$background-dm$>;
+	color: <$text-dm$>;
+
+	box-shadow: 2px 2px 7px 6px rgba(0,0,0,.4);
+    }
+}

@@ -1,0 +1,121 @@
+@!color_full [
+  {:'background-section', {"rgb(200, 200, 200)", "white", true, false}},
+  {:'background-section-color', {"rgb(240, 240, 240)", "black", false, true}},
+  {:'invert-text', {"rgb(235, 235, 235)", "black", false, true}},
+  primary: {"rgb(104, 207, 232)", "white", true, false},
+  secondary: {"rgb(104, 187, 232)", "white", true, false},
+  tertiary: {"rgb(168, 64, 189)", "white", true, false},
+  text: {"rgb(48, 48, 48)", "white", false, true},
+  soft: {"rgb(120, 120, 120)", "white", false, true},
+  background: {"rgb(240, 240, 240)", "black", false, true},
+  success: {"rgb(55, 171, 80)", "white", true, true},
+  alert: {"rgb(176, 51, 19)", "white", true, true},
+  info: {"rgb(2, 179, 155)", "white", true, false},
+  clear: {"rgba(255, 255, 255, 0.0)", "black", false, false},
+  shadow: {"rgba(0,0,0,0.1)", "black", false, false},
+  white: {"white", "black", true, false},
+  placeholder: {"rgb(160, 160, 160)", "white", true, false}
+] |> Enum.into(%{});
+
+@!color_full_dm [
+    {:'background-section', {"rgb(55, 55, 55)", "white", false, true}},
+    {:'background-section-color', {"rgb(15, 15, 15)", "white", true, false}},
+    {:'invert-text', {"rgb(40, 40, 40)", "white", true, false}},
+    primary: {"rgb(104, 207, 232)", "white", true, true},
+    secondary: {"rgb(104, 187, 232)", "white", true, true},
+    tertiary: {"rgb(168, 64, 189)", "white", true, true},
+    text: {"rgb(220, 220, 220)", "black", true, false},
+    soft: {"rgb(120, 120, 120)", "black", false, true},
+    background: {"rgb(60, 60, 60)", "white", true, false},
+    success: {"rgb(55, 171, 80)", "black", false, true},
+    alert: {"rgb(176, 51, 19)", "black", false, true},
+    info: {"rgb(2, 179, 155)", "black", false, true},
+    clear: {"rgba(255, 255, 255, 0.0)", "white", true, false},
+    shadow: {"rgba(255,255,255,0.1)", "black", false, false},
+    placeholder: {"rgb(100, 100, 100)", "white", true, false},
+    white: {"black", "white", false, true}
+] |> Enum.into(%{});
+
+@!colors Enum.map(color_full, fn({color, {value, _, _, _}}) -> {color, value} end);
+@!colors_dm Enum.map(color_full_dm, fn({color, {value, _, _, _}}) -> {color, value} end);
+
+$*!box-shadow-color rgba(0,0,0,0.4);
+
+<%= for {k, v} <- @colors, reduce: [] do
+  acc ->
+    ["$*!", to_string(k), " ", v, ";\n" | acc]
+end %>
+
+<%= for {k, v} <- @colors_dm, reduce: [] do
+  acc ->
+    ["$*!", to_string(k), "-dm ", v, ";\n" | acc]
+end %>
+
+@!theme %{
+    nav: %{
+	height: "50px",
+	background: "var(--background-section)",
+	color: "var(--background-section-color)"
+    },
+    footer: %{
+        height: "200px",
+	background: "var(--background-section)",
+	color: "var(--background-section-color)"
+    }   
+};
+
+@!theme_dm %{
+    nav: %{
+	height: "50px",
+	background: "var(--background-section-dm)",
+	color: "var(--background-section-color-dm)"
+    },
+    footer: %{
+        height: "200px",
+	background: "var(--background-section-dm)",
+	color: "var(--background-section-color-dm)"
+    }   
+};
+
+@!breakpoints [
+  sm: "0px",
+  md: "768px",
+  lg: "992px",
+  xl: "1200px",
+  xxl: "1440px",
+];
+
+@!sides %{left: "l", top: "t", right: "r", bottom: "b"};
+
+
+<%= for {k, vals} <- @theme, reduce: "" do
+acc ->
+    for {prop, val} <- vals, reduce: acc do
+      acc_2 ->
+      	 acc_2 <> """
+	 $!#{k}-#{prop} #{val};
+	 """
+    end
+    
+
+end %>
+
+
+<%= for {k, vals} <- @theme_dm, reduce: "" do
+acc ->
+    for {prop, val} <- vals, reduce: acc do
+      acc_2 ->
+      	 acc_2 <> """
+	 $!#{k}-#{prop}-dm #{val};
+	 """
+    end
+    
+
+end %>
+
+<%= for {bp, width} <- @breakpoints, reduce: "" do
+  acc ->
+    acc <> """
+    $*!#{bp} #{width};
+    """
+end %>

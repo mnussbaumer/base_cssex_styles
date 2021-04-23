@@ -1,0 +1,10 @@
+.profile-image {
+    width: inherit;
+    heigt: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+	@fn::enforce_circle(120px)
+    }
+}

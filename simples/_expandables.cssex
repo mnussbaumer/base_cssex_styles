@@ -1,0 +1,129 @@
+@include "./_variables.cssex";
+@include "./_functions.cssex";
+
+@expandable .primary-gradient {
+  background: var(--primary);
+  background: linear-gradient(0deg, var(--primary) 0%, var(--secondary) 100%);
+  @media (prefers-color-scheme: dark) {
+      background: var(--primary-dm);
+      background: linear-gradient(0deg, var(--primary-dm) 0%, var(--secondary-dm) 100%);
+  }
+}
+
+@expandable .btn {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+<%= for {color, {value, text, value_hover, text_hover}} <- @color_full, reduce: [] do
+  acc ->
+    {value_dm, text_dm, value_hover_dm, text_hover_dm} = Map.get(@color_full_dm, color)
+    [
+"""
+@expandable .btn-#{color} {
+  color: #{text};
+  background-color: #{value};
+  &:hover {
+    color: @fn::darken_or_lighten(#{text}, #{text_hover}, 10);
+    background-color: @fn::darken_or_lighten(#{value}, #{value_hover}, 10);
+  }
+  @media (prefers-color-scheme: dark) {
+    color: #{text_dm};
+    background-color: #{value_dm};
+    &:hover {
+      color: @fn::darken_or_lighten(#{text_dm}, #{text_hover_dm}, 10);
+      background-color: @fn::darken_or_lighten(#{value_dm}, #{value_hover_dm}, 10);
+    }
+  }
+}
+
+@expandable .hoverable-#{color} {
+  &:hover {
+    color: @fn::darken_or_lighten(#{text}, #{text_hover}, 10);
+    background-color: @fn::darken_or_lighten(#{value}, #{value_hover}, 10);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:hover {
+      color: @fn::darken_or_lighten(#{text_dm}, #{text_hover_dm}, 10);
+      background-color: @fn::darken_or_lighten(#{value_dm}, #{value_hover_dm}, 10);
+    }
+  }
+}
+
+@expandable .border-#{color} {
+  border-color: #{value};
+  border-width: 1px;
+  border-style: solid;
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #{value_dm};
+  }
+}
+
+@expandable .bg-#{color} {
+  background-color: #{value};
+  @media (prefers-color-scheme: dark) {
+    border-color: #{value_dm};
+  }
+}
+
+@expandable .inherit-color-#{color} {
+  .inherit-color {
+    color: #{value};
+  }
+  @media (prefers-color-scheme: dark) {
+    .inherit-color {
+      color: #{value_dm};
+    }
+  }
+}
+
+@expandable .color-#{color} {
+  color: #{text};
+
+  &.btn-clear:hover { 
+    color: @fn::darken_or_lighten(#{text}, #{text_hover}, 30);
+  }
+
+  &svg { 
+    fill: #{value};
+  }
+
+  &a:hover {
+    color: @fn::darken_or_lighten(#{text}, #{text_hover}, 30);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    color: #{text_dm};
+
+    &.btn-clear:hover { 
+      color: @fn::darken_or_lighten(#{text_dm}, #{text_hover_dm}, 30);
+    }
+
+    &svg { 
+      fill: #{value_dm};
+    }
+
+    &a:hover {
+      color: @fn::darken_or_lighten(#{text_dm}, #{text_hover_dm}, 30);
+    } 
+  }
+}
+
+""" | acc]  
+end %>
+
+@expandable .reset-border {
+    outline: 0;
+    border: 0;
+    box-shadow: 0;
+    
+    &:hover, &:active, &:focus, &:disabled, &:enabled, &:invalid, &:required {
+	outline: 0;
+	border: 0;
+	box-shadow: 0;
+    }
+}
